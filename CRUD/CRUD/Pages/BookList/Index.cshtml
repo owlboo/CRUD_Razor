@@ -1,0 +1,72 @@
+﻿@page
+@model IndexModel
+@{
+}
+<br />
+
+<h2>Book List</h2>
+<br />
+
+@if(Model.Message != null)
+{
+    <div class="alert alert-info alert-dismissable" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        @Model.Message
+    </div>
+}
+<a asp-page="Create" class="btn btn-primary">Create New Book</a>
+<br />
+<form method="post">
+    @if (Model.Book.Count() > 0)
+    {
+
+
+        <br />
+        <table class="table">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(m => m.Book.FirstOrDefault().Name)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(m => m.Book.FirstOrDefault().ISBN)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(m => m.Book.FirstOrDefault().Author)
+                </th>
+                <th>
+
+                </th>
+                <th>
+
+                </th>
+            </tr>
+            @foreach (var item in Model.Book)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(m => item.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(m => item.ISBN)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(m => item.Author)
+                    </td>
+                    <td>
+                        <button asp-page-handler="Delete" asp-route-id="@item.Id" class="btn btn-danger btn-sm">Delete</button>
+                        <a asp-page="Edit" asp-route-id="@item.Id" class="btn btn-info btn-sm">Edit</a>
+                    </td>
+
+                </tr>
+
+            }
+        </table>
+        <br /><br />
+    }
+    else
+    {
+        <div>No books in Database</div>
+    }
+</form>
